@@ -1,101 +1,69 @@
-class TestResepter{
+public class TestResepter {
+    private static int teller = 1;
+    public static void main(String[] args) {
 
-    public static void hvitReseptTest(){
-        Narkotisk narkotisk = new Narkotisk("Heroin", 500, 10.0 , 400);
-        Lege lege = new Lege("Per");
-        HvitResept hvitresept = new HvitResept(narkotisk, lege, 5, 3);
-        
-        if (hvitresept.hentId() == 0){
-            System.out.println("\n ID-nummeret for hvitresept er riktig.");
-        }
-        else {System.out.println("\n ID-nummeret for hvitresept er feil.");}
+        // Oppretter 4 forskjellige legemiddel-objekter
+        Narkotisk oxycodoneActavis = new Narkotisk("Oxycodone Actavis", 500, 10, 6);
+        Vanedannende zolpidem = new Vanedannende("Zolpidem", 250, 3, 8);
+        Vanlig paracet = new Vanlig("Paracet", 100, 500);
+        Vanlig pPiller = new Vanlig("P-piller", 150, 4);
 
-        if (hvitresept.farge() == "hvit") {
-            System.out.println("Riktig reseptfarge.");
-        }
-        else {System.out.println("Feil reseptfarge.");}
-        
+        // Oppretter ett lege-objekt
+        Lege legeFleming = new Lege("Alexander Fleming");
 
-        if (hvitresept.prisAaBetale() == 500) {
-            System.out.println("Riktig pris. \n");
-        }
-        else {System.out.println("Feil pris. \n");}
-    }
-    
-    public static void milReseptTest(){
-        Narkotisk narkotisk = new Narkotisk("Heroin", 500, 10.0 , 400);
-        Lege lege = new Lege("Per");
-        MilResept milresept = new MilResept(narkotisk, lege, 5);
-        
-        if (milresept.ID == 1){
-            System.out.println("ID-nummeret for milresept er riktig.");
-        }
-        else {System.out.println("ID-nummeret for milresept er feil.");}
+        // Oppretter 4 forskjellige resept-objekter
+        MilResept testMil = new MilResept(oxycodoneActavis, legeFleming, 124495);
+        PrevensjonsResept testPrev = new PrevensjonsResept(pPiller, legeFleming, 392352, 5);
+        HvitResept testHvit = new HvitResept(paracet,legeFleming, 213959, 1);
+        BlaaResept testBlaa = new BlaaResept(zolpidem, legeFleming, 749123, 2);
 
-        if (milresept.farge() == "hvit") {
-            System.out.println("Riktig reseptfarge.");
-        }
-        else {System.out.println("Feil reseptfarge.");}
-        
 
-        if (milresept.prisAaBetale() == 0)  { //gratis legemidler for milresept
-            System.out.println("Riktig pris.  \n");
-        }
-        else {System.out.println("Feil pris.  \n");}
-    }
+        System.out.println("\nTester resept-ID:");
+        intTest(testMil.reseptId, 0);
+        intTest(testPrev.reseptId, 1);
+        intTest(testHvit.reseptId, 2);
+        intTest(testBlaa.reseptId, 3);
 
-    public static void pReseptTest(){
-        Narkotisk narkotisk = new Narkotisk("Heroin", 500, 10.0 , 400);
-        Lege lege = new Lege("Per");
-        PResept presept = new PResept(narkotisk, lege, 5, 4);
-        
-        if (presept.ID == 2){
-            System.out.println("ID-nummeret for presept er riktig.");
-        }
-        else {System.out.println("ID-nummeret for presept er feil.");}
 
-        if (presept.farge() == "hvit") {
-            System.out.println("Riktig reseptfarge.");
-        }
-        else {System.out.println("Feil reseptfarge.");}
-        
+        System.out.println("\nTester pris:");
+        intTest(testMil.prisAaBetale(testMil.legemiddel), 0);  // Alltid kostnadsfritt
+        intTest(testPrev.prisAaBetale(testPrev.legemiddel), 42);  // Avslag på 108kr
+        intTest(testHvit.prisAaBetale(testHvit.legemiddel), 100);  //Standard pris
+        intTest(testBlaa.prisAaBetale(testBlaa.legemiddel), 63);  // En fjerdedel av prisen - her rundet opp
 
-        if (presept.prisAaBetale() == 392)  { 
-            System.out.println("Riktig pris. \n");
-        }
-        else {System.out.println("Feil pris. \n");}
-    }
 
-    public static void blaaReseptTest(){
-        Narkotisk narkotisk = new Narkotisk("Heroin", 500, 10.0 , 400);
-        Lege lege = new Lege("Per");
-        BlaaResept blaaresept = new BlaaResept(narkotisk, lege, 5, 4);
-        
-        if (blaaresept.ID == 3){
-            System.out.println("ID-nummeret for blaaresept er riktig.");
-        }
-        else {System.out.println("ID-nummeret for blaaresept er feil.");}
+        System.out.println("\nTester reit:");
+        intTest(testMil.hentReit(), 3);  // Vil alltid ha 3 reit
+        intTest(testPrev.hentReit(), 5);
 
-        if (blaaresept.farge() == "blaa") {
-            System.out.println("Riktig reseptfarge.");
-        }
-        else {System.out.println("Feil reseptfarge.");}
-        
 
-        if (blaaresept.prisAaBetale() == 125)  { 
-            System.out.println("Riktig pris. \n");
-        }
-        else {System.out.println("Feil pris. \n");}
+        System.out.println("\nTester farge på resept:");
+        stringTest(testMil.farge(), "hvit");  // Underklasse av hvit resept
+        stringTest(testPrev.farge(), "hvit");  // Underklasse av hvit resept
+        stringTest(testHvit.farge(), "hvit");  // Hvit resept
+        stringTest(testBlaa.farge(), "blaa");  // Blaa resept
+
+
+        System.out.println("\nTester utskrift:");
+        System.out.println(testMil);
     }
 
 
-
-        public static void main(String[] args) {
-            
-            hvitReseptTest();
-            milReseptTest();
-            pReseptTest();
-            blaaReseptTest();
-
+    public static void intTest(int faktiskResultat, int forventetResultat) {
+        if (faktiskResultat == forventetResultat) {
+            System.out.println("Riktig #" + teller);
+        } else {
+            System.out.println("Feil #" + teller);
         }
+        teller ++;
+    }
+
+    public static void stringTest(String faktiskResultat, String forventetResultat) {
+        if (faktiskResultat.equals(forventetResultat)) {
+            System.out.println("Riktig #" + teller);
+        } else {
+            System.out.println("Feil #" + teller);
+        }
+        teller ++;
+    }
 }

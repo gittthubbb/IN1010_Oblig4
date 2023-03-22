@@ -1,23 +1,22 @@
-class Spesialist extends Lege implements Godkjenningsfritak {
+public class Spesialist extends Lege implements Godkjenningsfritak {
 
-@Override
-public String toString() {
-    return "Spesialistnavn: " + legeNavn + ".   Kontrollkode: " + kontrollkode; // skriver egenskapene
-}
-public String kontrollkode;
+    private final String kontrollkode;  // Legens (spesialistens) unike kontrollkode
 
+    public Spesialist(String navn, String kontrollkode) {
+        super(navn);
+        this.kontrollkode = kontrollkode;
+    }
 
+    @Override
+    public String hentKontrollkode()
+    {  // Returnerer kontrollkoden fra interfacet Godkjenningsfritak
+        return kontrollkode;
+    }
 
-public Spesialist(String legenavn, String kontrollkode) {
-    super(legenavn);
-    this.kontrollkode = kontrollkode;
-
-}
-
-public String hentKontrollkode(){
-    return kontrollkode;
-}
-
-
-    
+    public String toString()
+    {  // Override for aa presentere informasjon om spesialisten
+        return  "\nLEGE - SPESIALIST:" +
+                "\nNavn: " + hentNavn() +
+                "\nKontrollkode: " + kontrollkode;
+    }
 }

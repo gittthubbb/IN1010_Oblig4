@@ -1,15 +1,17 @@
-class Vanlig extends Legemiddel{
+public class Vanlig extends Legemiddel{
+
+    public Vanlig(String navn, int pris, double virkestoff) {
+        super(navn, pris, virkestoff);
+    }
 
     @Override
-    public String toString() {
-        return "Legemiddel: " + navn + ".   Pris: " + pris + ".  Mengde virkestoff: " + virkestoff; // skriver egenskapene
+    public String toString()
+    {  // Override for aa presentere informasjon om det vanlige legemidler
+        return  "\nLEGEMIDDEL:" +
+                "\nNavn: " + navn +
+                "\nType: " + "Vanlig" +
+                "\nMedID: " + id +
+                "\nPris: " + pris + ",-" +
+                "\nVirkestoff: " + virkestoff + " mg";
     }
-
-    
-
-    public Vanlig(String navn, int pris, double virkestoff){
-        super(navn, pris, virkestoff);
-        
-    }
-    
 }
